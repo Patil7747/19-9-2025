@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form</title>
+  <style>
+    body {
+      background-color: #e6e6ff;
+      font-family: Arial, sans-serif;
+    }
+    form {
+      width: 420px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid rgb(4, 3, 3);
+      background-color: #f2f2ff;
+      box-shadow: 0px 0px 10px #888;
+    }
+    h2 {
+      color: rgb(15, 14, 14);
+      text-align: center;
+    }
+    label {
+      display: inline-block;
+      width: 120px;
+      margin-bottom: 8px;
+      color: red;
+    }
+    input, select {
+      margin-bottom: 8px;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-left: 120px;
+      display: block;
+    }
+    .submit-btn {
+      display: block;
+      margin: auto;
+      margin-top: 15px;
+      padding: 6px 12px;
+    }
+  </style>
+</head>
+<body>
+  <form id="myForm">
+    <h2>Form</h2>
+    
+    <label>First Name</label><input type="text" id="fname"><span class="error" id="fnameError"></span><br>
+    <label>Last Name</label><input type="text" id="lname"><span class="error" id="lnameError"></span><br>
+    <label>Father's Name</label><input type="text" id="father"><span class="error" id="fatherError"></span><br>
+    <label>DOB</label><input type="date" id="dob"><span class="error" id="dobError"></span><br>
+    <label>Gender</label>
+    <input type="radio" name="gender" value="male">Male
+    <input type="radio" name="gender" value="female">Female
+    <span class="error" id="genderError"></span><br>
+    <label>Address</label><input type="text" id="address"><span class="error" id="addressError"></span><br>
+    <label>State</label>
+    <select id="state">
+      <option value="">Select</option>
+      <option>Maharashtra</option>
+      <option>Arunachal Pradesh</option>
+      <option>Andhra Pradesh</option>
+      <option>Goa</option>
+    </select>
+    <span class="error" id="stateError"></span><br>
+    <label>Pincode</label><input type="text" id="pincode"><span class="error" id="pincodeError"></span><br>
+    <label>Email</label><input type="text" id="email"><span class="error" id="emailError"></span><br>
+    <label>Phone Number</label><input type="text" id="phone"><span class="error" id="phoneError"></span><br>
+    <label>Languages</label>
+    <input type="checkbox" name="lang" value="telugu">Telugu
+    <input type="checkbox" name="lang" value="hindi">Hindi
+    <input type="checkbox" name="lang" value="english">English
+    <span class="error" id="langError"></span><br>
+    
+    <button type="Submit" class="submit-btn">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById("myForm").addEventListener("submit", function(e) {
+      e.preventDefault(); 
+      let valid = true;
+
+      
+      document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+      
+      let fname = document.getElementById("fname").value.trim();
+      if (!/^[A-Za-z ]{3,}$/.test(fname)) {
+        document.getElementById("fnameError").textContent = "First name must be at least 3 letters.";
+        valid = false;
+      }
+
+      
+      let lname = document.getElementById("lname").value.trim();
+      if (!/^[A-Za-z ]{3,}$/.test(lname)) {
+        document.getElementById("lnameError").textContent = "Last name must be at least 3 letters.";
+        valid = false;
+      }
+
+      
+      let father = document.getElementById("father").value.trim();
+      if (!/^[A-Za-z ]{3,}$/.test(father)) {
+        document.getElementById("fatherError").textContent = "Father's name must be at least 3 letters.";
+        valid = false;
+      }
+
+    
+      let dob = document.getElementById("dob").value;
+      if (dob) {
+        let birthDate = new Date(dob);
+        let today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        if (age < 18 || age > 60) {
+          document.getElementById("dobError").textContent = "Age must be between 18 and 60 years.";
+          valid = false;
+        }
+      } else {
+        document.getElementById("dobError").textContent = "Please enter your Date of Birth.";
+        valid = false;
+      }
+
+      
+      let gender = document.querySelector('input[name="gender"]:checked');
+      if (!gender) {
+        document.getElementById("genderError").textContent = "Please select gender.";
+        valid = false;
+      }
+
+      
+      let address = document.getElementById("address").value.trim();
+      if (address.length < 5) {
+        document.getElementById("addressError").textContent = "Address must be at least 5 characters.";
+        valid = false;
+      }
+
+      
+      let state = document.getElementById("state").value;
+      if (state === "") {
+        document.getElementById("stateError").textContent = "Please select a state.";
+        valid = false;
+      }
+
+      
+      let pincode = document.getElementById("pincode").value.trim();
+      if (!/^[0-9]{6}$/.test(pincode)) {
+        document.getElementById("pincodeError").textContent = "Pincode must be exactly 6 digits.";
+        valid = false;
+      }
+
+      
+      let email = document.getElementById("email").value.trim();
+      let emailRegex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById("emailError").textContent = "Enter a valid email (example@domain.com).";
+        valid = false;
+      }
+
+    
+      let phone = document.getElementById("phone").value.trim();
+      if (!/^[0-9]{10}$/.test(phone)) {
+        document.getElementById("phoneError").textContent = "Phone must be exactly 10 digits.";
+        valid = false;
+      }
+
+    
+      let langs = document.querySelectorAll('input[name="lang"]:checked');
+      if (langs.length === 0) {
+        document.getElementById("langError").textContent = "Please select at least one language.";
+        valid = false;
+      }
+
+      
+      if (valid) {
+        alert("Form submitted successfully!");
+        this.submit();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6ecf8;
+    }
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 2px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      background: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="regForm" novalidate>
+      <label>First Name <span class="required">*</span></label>
+      <input type="text" id="firstName" name="firstName">
+      <div class="error" id="firstNameError"></div>
+
+      <label>Last Name <span class="required">*</span></label>
+      <input type="text" id="lastName" name="lastName">
+      <div class="error" id="lastNameError"></div>
+
+      <label>Father's Name <span class="required">*</span></label>
+      <input type="text" id="fatherName" name="fatherName">
+      <div class="error" id="fatherNameError"></div>
+
+      <label>Date of Birth <span class="required">*</span></label>
+      <input type="date" id="dob" name="dob">
+      <div class="error" id="dobError"></div>
+
+      <label>Phone Number <span class="required">*</span></label>
+      <input type="text" id="phone" name="phone">
+      <div class="error" id="phoneError"></div>
+
+      <label>High School Name <span class="required">*</span></label>
+      <input type="text" id="highSchool" name="highSchool">
+      <div class="error" id="highSchoolError"></div>
+
+      <label>Permanent Address <span class="required">*</span></label>
+      <input type="text" id="address" name="address">
+      <div class="error" id="addressError"></div>
+
+      <label>Your Level</label>
+      <select id="level" name="level">
+        <option value="">Select Level </option>
+        <option>1st Year</option>
+        <option>2nd Year</option>
+        <option>3rd Year</option>
+        <option>4th Year</option>
+      </select>
+
+      <label>Email <span class="required">*</span></label>
+      <input type="email" id="email" name="email">
+      <div class="error" id="emailError"></div>
+
+      <label>Degree Program <span class="required">*</span></label>
+      <select id="degree" name="degree">
+        <option value=""> Select Degree Program</option>
+        <option>BS in Pre-Med Physics</option>
+        <option>BS in Computer Science</option>
+        <option>BS in Mathematics</option>
+        <option>BS in Chemistry</option>
+      </select>
+      <div class="error" id="degreeError"></div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("regForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      let isValid = true;
+
+      
+      document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+      
+      const namePattern = /^[A-Za-z ]{3,}$/;
+      const phonePattern = /^[0-9]{10}$/;
+      const hsPattern = /^[A-Za-z ]+$/;
+      const addressPattern = /^[A-Za-z0-9 ,.-]+$/;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      
+      const firstName = document.getElementById("firstName").value.trim();
+      if (!namePattern.test(firstName)) {
+        document.getElementById("firstNameError").textContent = "First name must be at least 3 letters (letters & spaces only).";
+        isValid = false;
+      }
+
+
+      const lastName = document.getElementById("lastName").value.trim();
+      if (!namePattern.test(lastName)) {
+        document.getElementById("lastNameError").textContent = "Last name must be at least 3 letters (letters & spaces only).";
+        isValid = false;
+      }
+
+    
+      const fatherName = document.getElementById("fatherName").value.trim();
+      if (!namePattern.test(fatherName)) {
+        document.getElementById("fatherNameError").textContent = "Father's name must be at least 3 letters (letters & spaces only).";
+        isValid = false;
+      }
+
+    
+      const dob = new Date(document.getElementById("dob").value);
+      if (isNaN(dob)) {
+        document.getElementById("dobError").textContent = "Please enter a valid date of birth.";
+        isValid = false;
+      } else {
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+          age--;
+        }
+        if (age < 18 || age > 40) {
+          document.getElementById("dobError").textContent = "Age must be between 18 and 40.";
+          isValid = false;
+        }
+      }
+
+
+      const phone = document.getElementById("phone").value.trim();
+      if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").textContent = "Phone must be exactly 10 digits.";
+        isValid = false;
+      }
+
+      
+      const highSchool = document.getElementById("highSchool").value.trim();
+      if (!hsPattern.test(highSchool)) {
+        document.getElementById("highSchoolError").textContent = "High school name must contain only letters and spaces.";
+        isValid = false;
+      }
+
+      
+      const address = document.getElementById("address").value.trim();
+      if (!addressPattern.test(address)) {
+        document.getElementById("addressError").textContent = "Address can contain letters, numbers, commas, periods, and hyphens.";
+        isValid = false;
+      }
+
+    
+      const email = document.getElementById("email").value.trim();
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Please enter a valid email (example@domain.com).";
+        isValid = false;
+      }
+
+      
+      const degree = document.getElementById("degree").value;
+      if (degree === "") {
+        document.getElementById("degreeError").textContent = "Please select a degree program.";
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert("Form submitted successfully!");
+        
+      }
+    });
+  </script>
+</body>
+</html>

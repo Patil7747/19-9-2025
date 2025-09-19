@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Registration Form Using Table in HTML</title>
+<style>
+h2{
+  font-family: Sans-serif; 
+  font-size: 24px;     
+  font-style: normal; 
+  font-weight: bold; 
+  color: blue;
+  text-align: center; 
+  text-decoration: underline
+   white;
+}
+table{
+  font-family: verdana; 
+  color:white; 
+  font-size: 16px; 
+  font-style: normal;
+  font-weight: bold;
+  background: rgb(207, 194, 194);  
+  border-collapse: collapse; 
+  border: 4px solid #000000;
+  border-style: dashed;
+}
+.error {
+  color: red;
+  font-size: 14px;
+  font-weight: normal;
+}
+input[type=text], input[type=email], input[type=number]{
+  width: 50%;
+  padding: 6px 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+input[type=submit], input[type=reset]{
+  width: 15%;
+  padding: 8px 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+</style>
+</head>
+<body>
+<h2>Student Registration Form Using Table in HTML</h2>
+<form id="regForm" onsubmit="return validateForm();">
+<table align="center" cellpadding = "10">
+<tr>
+<td>First Name</td>
+<td>
+  <input type="text" name="FirstName" id="FirstName" maxlength="50" placeholder="enter name" />
+  <div id="fnameError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Last Name</td>
+<td>
+  <input type="text" name="LastName" id="LastName" maxlength="50" placeholder="enter last name"/>
+  <div id="lnameError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Email ID</td>
+<td>
+  <input type="email" name="EmailID" id="EmailID" maxlength="100" placeholder="example@gmail.com"/>
+  <div id="emailError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Mobile Number</td>
+<td>
+  <input type="text" name="MobileNumber" id="MobileNumber" maxlength="10" placeholder=""/>
+  <div id="mobileError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>
+  <input type="radio" name="Gender" value="Male" /> Male
+  <input type="radio" name="Gender" value="Female" /> Female
+  <div id="genderError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Date of Birth(DOB)</td>
+<td>
+<select name="BirthDay" id="Birthday_Day">
+<option value="-1">Day:</option>
+<script>
+  for(let i=1;i<=31;i++){document.write("<option value='"+i+"'>"+i+"</option>");}
+</script>
+</select>
+<select name="BirthdayMonth" id="Birthday_Month">
+<option value="-1">Month:</option>
+<option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+<option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+<option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+<option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+</select>
+<select name="BirthdayYear" id="Birthday_Year">
+<option value="-1">Year:</option>
+<script>
+  let currentYear = new Date().getFullYear();
+  for(let y=currentYear; y>=1950; y--){document.write("<option value='"+y+"'>"+y+"</option>");}
+</script>
+</select>
+<div id="dobError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>
+  <textarea name="Address" id="Address" rows="5" cols="50"></textarea>
+  <div id="addressError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>City</td>
+<td>
+  <input type="text" name="City" id="City" maxlength="50" placeholder=""/>
+  <div id="cityError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Pin Code</td>
+<td>
+  <input type="text" name="PinCode" id="PinCode" maxlength="6" placeholder=""/>
+  <div id="pinError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>State</td>
+<td><input type="text" name="State" maxlength="50" placeholder=""/></td>
+</tr>
+<tr>
+<td>Country</td>
+<td>
+<select id="Country" name="Country">
+  <option value="">--Select Country--</option>
+  <option value="India">India</option>
+  <option value="USA">USA</option>
+  <option value="UK">UK</option>
+  <option value="Canada">Canada</option>
+</select>
+<div id="countryError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Hobbies</td>
+<td>
+  <input type="checkbox" name="Hobby" value="Drawing" /> Drawing
+  <input type="checkbox" name="Hobby" value="Singing" /> Singing
+  <input type="checkbox" name="Hobby" value="Dancing" /> Dancing
+  <input type="checkbox" name="Hobby" value="Cooking" /> Cooking
+  <div id="hobbyError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Qualification</td>
+<td>
+  <input type="radio" name="Qualification" value="High School" /> High School (10th)<br>
+  <input type="radio" name="Qualification" value="Higher School" /> Higher School (12th)<br/>
+  <input type="radio" name="Qualification" value="Graduation" /> Graduation<br/>
+  <input type="radio" name="Qualification" value="Post Graduation" /> Post Graduation<br/>
+  <input type="radio" name="Qualification" value="Phd"> PhD
+  <div id="qualError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td>Courses Applied For</td>
+<td>
+  <input type="radio" name="Course" value="BCA"> BCA<br>
+  <input type="radio" name="Course" value="B.Com"> B.Com<br>
+  <input type="radio" name="Course" value="B.Sc"> B.Sc<br>
+  <input type="radio" name="Course" value="BA"> BA<br>
+  <input type="radio" name="Course" value="MCA"> MCA<br>
+  <input type="radio" name="Course" value="M.Com"> M.Com<br>
+  <input type="radio" name="Course" value="M.Sc"> M.Sc<br>
+  <input type="radio" name="Course" value="MA"> MA<br>
+  <div id="courseError" class="error"></div>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<input type="submit" value="Submit">
+<input type="reset" value="Reset">
+</td>
+</tr>
+</table>
+</form>
+
+<script>
+function validateForm() {
+  let valid = true;
+  document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
+
+  
+  let fname = document.getElementById("FirstName").value.trim();
+  if(fname.length < 3 || !/^[A-Za-z ]+$/.test(fname)){
+    document.getElementById("fnameError").innerHTML = "First name must be at least 3 letters, only letters & spaces allowed.";
+    valid = false;
+  }
+  let lname = document.getElementById("LastName").value.trim();
+  if(lname.length < 3 || !/^[A-Za-z ]+$/.test(lname)){
+    document.getElementById("lnameError").innerHTML = "Last name must be at least 3 letters, only letters & spaces allowed.";
+    valid = false;
+  }
+
+  let email = document.getElementById("EmailID").value.trim();
+  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if(!emailPattern.test(email)){
+    document.getElementById("emailError").innerHTML = "Enter a valid email.";
+    valid = false;
+  }
+
+  
+  let mobile = document.getElementById("MobileNumber").value.trim();
+  if(!/^[0-9]{10}$/.test(mobile)){
+    document.getElementById("mobileError").innerHTML = "Mobile number must be exactly 10 digits.";
+    valid = false;
+  }
+
+  
+  if(!document.querySelector('input[name="Gender"]:checked')){
+    document.getElementById("genderError").innerHTML = "Please select gender.";
+    valid = false;
+  }
+
+  
+  let d = document.getElementById("Birthday_Day").value;
+  let m = document.getElementById("Birthday_Month").value;
+  let y = document.getElementById("Birthday_Year").value;
+  if(d == "-1" || m == "-1" || y == "-1"){
+    document.getElementById("dobError").innerHTML = "Please select full DOB.";
+    valid = false;
+  } else {
+    let birthDate = new Date(y, m-1, d);
+    let age = new Date().getFullYear() - birthDate.getFullYear();
+    if(age < 18 || age > 40){
+      document.getElementById("dobError").innerHTML = "Age must be between 18 and 40.";
+      valid = false;
+    }
+  }
+
+
+  let address = document.getElementById("Address").value.trim();
+  if(address === ""){
+    document.getElementById("addressError").innerHTML = "Address is required.";
+    valid = false;
+  }
+
+  
+  let city = document.getElementById("City").value.trim();
+  if(city === "" || !/^[A-Za-z ]+$/.test(city)){
+    document.getElementById("cityError").innerHTML = "City must contain only letters.";
+    valid = false;
+  }
+
+
+  let pin = document.getElementById("PinCode").value.trim();
+  if(!/^[0-9]{6}$/.test(pin)){
+    document.getElementById("pinError").innerHTML = "Pin code must be 6 digits.";
+    valid = false;
+  }
+
+
+  let country = document.getElementById("Country").value;
+  if(country === ""){
+    document.getElementById("countryError").innerHTML = "Please select a country.";
+    valid = false;
+  }
+
+  
+  if(!document.querySelector('input[name="Hobby"]:checked')){
+    document.getElementById("hobbyError").innerHTML = "Please select at least one hobby.";
+    valid = false;
+  }
+
+  
+  if(!document.querySelector('input[name="Qualification"]:checked')){
+    document.getElementById("qualError").innerHTML = "Please select a qualification.";
+    valid = false;
+  }
+
+
+  if(!document.querySelector('input[name="Course"]:checked')){
+    document.getElementById("courseError").innerHTML = "Please select a course.";
+    valid = false;
+  }
+
+  if(valid){
+    alert("Form submitted successfully!");
+  }
+  return valid;
+}
+</script>
+</body>
+</html>
