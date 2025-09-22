@@ -1,300 +1,368 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Registration Form Using Table in HTML</title>
-<style>
-h2{
-  font-family: Sans-serif; 
-  font-size: 24px;     
-  font-style: normal; 
-  font-weight: bold; 
-  color: blue;
-  text-align: center; 
-  text-decoration: underline
-   white;
-}
-table{
-  font-family: verdana; 
-  color:white; 
-  font-size: 16px; 
-  font-style: normal;
-  font-weight: bold;
-  background: rgb(207, 194, 194);  
-  border-collapse: collapse; 
-  border: 4px solid #000000;
-  border-style: dashed;
-}
-.error {
-  color: red;
-  font-size: 14px;
-  font-weight: normal;
-}
-input[type=text], input[type=email], input[type=number]{
-  width: 50%;
-  padding: 6px 12px;
-  margin: 5px 0;
-  box-sizing: border-box;
-}
-input[type=submit], input[type=reset]{
-  width: 15%;
-  padding: 8px 12px;
-  margin: 5px 0;
-  box-sizing: border-box;
-}
-</style>
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: white;
+    }
+    table {
+      width: 100%;
+      border: 2px dashed black;
+      border-collapse: collapse;
+      background: linear-gradient(to bottom, #66ccff, #cc99ff);
+    }
+    td {
+      padding: 10px;
+      vertical-align: top;
+    }
+    input, select, textarea {
+      margin-top: 5px;
+      padding: 5px;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      let day = document.getElementById("day");
+      let month = document.getElementById("month");
+      let year = document.getElementById("year");
+
+      // Days
+      for (let i = 1; i <= 31; i++) {
+        let opt = document.createElement("option");
+        opt.value = i;
+        opt.text = i;
+        day.add(opt);
+      }
+
+    
+      let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      for (let i = 0; i < months.length; i++) {
+        let opt = document.createElement("option");
+        opt.value = months[i];
+        opt.text = months[i];
+        month.add(opt);
+      }
+
+      
+      let currentYear = new Date().getFullYear();
+      for (let i = currentYear; i >= 1950; i--) {
+        let opt = document.createElement("option");
+        opt.value = i;
+        opt.text = i;
+        year.add(opt);
+      }
+    };
+
+    
+    function validateForm() {
+      let isValid = true;
+
+      
+      let fname = document.getElementById("fname").value.trim();
+      if (fname === "") {
+        document.getElementById("fnameError").innerText = "First name is required.";
+        isValid = false;
+      } else {
+        document.getElementById("fnameError").innerText = "";
+      }
+
+      
+      let lname = document.getElementById("lname").value.trim();
+      if (lname === "") {
+        document.getElementById("lnameError").innerText = "Last name is required.";
+        isValid = false;
+      } else {
+        document.getElementById("lnameError").innerText = "";
+      }
+
+
+      let email = document.getElementById("email").value.trim();
+      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+        document.getElementById("emailError").innerText = "Enter a valid email.";
+        isValid = false;
+      } else {
+        document.getElementById("emailError").innerText = "";
+      }
+
+    
+      let mobile = document.getElementById("mobile").value.trim();
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        document.getElementById("mobileError").innerText = "Enter 10 digit mobile number.";
+        isValid = false;
+      } else {
+        document.getElementById("mobileError").innerText = "";
+      }
+
+      
+      if (!document.getElementById("male").checked && !document.getElementById("female").checked) {
+        document.getElementById("genderError").innerText = "Select gender.";
+        isValid = false;
+      } else {
+        document.getElementById("genderError").innerText = "";
+      }
+
+      
+      if (document.getElementById("day").value === "" ||
+          document.getElementById("month").value === "" ||
+          document.getElementById("year").value === "") {
+        document.getElementById("dobError").innerText = "Select DOB.";
+        isValid = false;
+      } else {
+        document.getElementById("dobError").innerText = "";
+      }
+
+      
+      let address = document.getElementById("address").value.trim();
+      if (address === "") {
+        document.getElementById("addressError").innerText = "Address is required.";
+        isValid = false;
+      } else {
+        document.getElementById("addressError").innerText = "";
+      }
+
+      
+      if (document.getElementById("city").value.trim() === "") {
+        document.getElementById("cityError").innerText = "City is required.";
+        isValid = false;
+      } else {
+        document.getElementById("cityError").innerText = "";
+      }
+
+    
+      let pin = document.getElementById("pin").value.trim();
+      if (!/^[0-9]{6}$/.test(pin)) {
+        document.getElementById("pinError").innerText = "Enter 6 digit pin.";
+        isValid = false;
+      } else {
+        document.getElementById("pinError").innerText = "";
+      }
+
+      
+      if (document.getElementById("state").value.trim() === "") {
+        document.getElementById("stateError").innerText = "State is required.";
+        isValid = false;
+      } else {
+        document.getElementById("stateError").innerText = "";
+      }
+
+      
+      if (document.getElementById("country").value.trim() === "") {
+        document.getElementById("countryError").innerText = "Country is required.";
+        isValid = false;
+      } else {
+        document.getElementById("countryError").innerText = "";
+      }
+
+
+      let hobbies = document.getElementsByName("hobby");
+      let hobbySelected = false;
+      for (let i = 0; i < hobbies.length; i++) {
+        if (hobbies[i].checked) hobbySelected = true;
+      }
+      if (!hobbySelected) {
+        document.getElementById("hobbyError").innerText = "Select at least one hobby.";
+        isValid = false;
+      } else {
+        document.getElementById("hobbyError").innerText = "";
+      }
+
+      
+      let quals = document.getElementsByName("qual");
+      let qualSelected = false;
+      for (let i = 0; i < quals.length; i++) {
+        if (quals[i].checked) qualSelected = true;
+      }
+      if (!qualSelected) {
+        document.getElementById("qualError").innerText = "Select at least one qualification.";
+        isValid = false;
+      } else {
+        document.getElementById("qualError").innerText = "";
+      }
+
+      
+      let courses = document.getElementsByName("course");
+      let courseSelected = false;
+      for (let i = 0; i < courses.length; i++) {
+        if (courses[i].checked) courseSelected = true;
+      }
+      if (!courseSelected) {
+        document.getElementById("courseError").innerText = "Select a course.";
+        isValid = false;
+      } else {
+        document.getElementById("courseError").innerText = "";
+      }
+
+      return isValid;
+    }
+  </script>
 </head>
 <body>
-<h2>Student Registration Form Using Table in HTML</h2>
-<form id="regForm" onsubmit="return validateForm();">
-<table align="center" cellpadding = "10">
-<tr>
-<td>First Name</td>
-<td>
-  <input type="text" name="FirstName" id="FirstName" maxlength="50" placeholder="enter name" />
-  <div id="fnameError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Last Name</td>
-<td>
-  <input type="text" name="LastName" id="LastName" maxlength="50" placeholder="enter last name"/>
-  <div id="lnameError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Email ID</td>
-<td>
-  <input type="email" name="EmailID" id="EmailID" maxlength="100" placeholder="example@gmail.com"/>
-  <div id="emailError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Mobile Number</td>
-<td>
-  <input type="text" name="MobileNumber" id="MobileNumber" maxlength="10" placeholder=""/>
-  <div id="mobileError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Gender</td>
-<td>
-  <input type="radio" name="Gender" value="Male" /> Male
-  <input type="radio" name="Gender" value="Female" /> Female
-  <div id="genderError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Date of Birth(DOB)</td>
-<td>
-<select name="BirthDay" id="Birthday_Day">
-<option value="-1">Day:</option>
-<script>
-  for(let i=1;i<=31;i++){document.write("<option value='"+i+"'>"+i+"</option>");}
-</script>
-</select>
-<select name="BirthdayMonth" id="Birthday_Month">
-<option value="-1">Month:</option>
-<option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-<option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-<option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-<option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-</select>
-<select name="BirthdayYear" id="Birthday_Year">
-<option value="-1">Year:</option>
-<script>
-  let currentYear = new Date().getFullYear();
-  for(let y=currentYear; y>=1950; y--){document.write("<option value='"+y+"'>"+y+"</option>");}
-</script>
-</select>
-<div id="dobError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Address</td>
-<td>
-  <textarea name="Address" id="Address" rows="5" cols="50"></textarea>
-  <div id="addressError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>City</td>
-<td>
-  <input type="text" name="City" id="City" maxlength="50" placeholder=""/>
-  <div id="cityError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Pin Code</td>
-<td>
-  <input type="text" name="PinCode" id="PinCode" maxlength="6" placeholder=""/>
-  <div id="pinError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>State</td>
-<td><input type="text" name="State" maxlength="50" placeholder=""/></td>
-</tr>
-<tr>
-<td>Country</td>
-<td>
-<select id="Country" name="Country">
-  <option value="">--Select Country--</option>
-  <option value="India">India</option>
-  <option value="USA">USA</option>
-  <option value="UK">UK</option>
-  <option value="Canada">Canada</option>
-</select>
-<div id="countryError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Hobbies</td>
-<td>
-  <input type="checkbox" name="Hobby" value="Drawing" /> Drawing
-  <input type="checkbox" name="Hobby" value="Singing" /> Singing
-  <input type="checkbox" name="Hobby" value="Dancing" /> Dancing
-  <input type="checkbox" name="Hobby" value="Cooking" /> Cooking
-  <div id="hobbyError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Qualification</td>
-<td>
-  <input type="radio" name="Qualification" value="High School" /> High School (10th)<br>
-  <input type="radio" name="Qualification" value="Higher School" /> Higher School (12th)<br/>
-  <input type="radio" name="Qualification" value="Graduation" /> Graduation<br/>
-  <input type="radio" name="Qualification" value="Post Graduation" /> Post Graduation<br/>
-  <input type="radio" name="Qualification" value="Phd"> PhD
-  <div id="qualError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td>Courses Applied For</td>
-<td>
-  <input type="radio" name="Course" value="BCA"> BCA<br>
-  <input type="radio" name="Course" value="B.Com"> B.Com<br>
-  <input type="radio" name="Course" value="B.Sc"> B.Sc<br>
-  <input type="radio" name="Course" value="BA"> BA<br>
-  <input type="radio" name="Course" value="MCA"> MCA<br>
-  <input type="radio" name="Course" value="M.Com"> M.Com<br>
-  <input type="radio" name="Course" value="M.Sc"> M.Sc<br>
-  <input type="radio" name="Course" value="MA"> MA<br>
-  <div id="courseError" class="error"></div>
-</td>
-</tr>
-<tr>
-<td colspan="2" align="center">
-<input type="submit" value="Submit">
-<input type="reset" value="Reset">
-</td>
-</tr>
-</table>
-</form>
+  <h2 style="text-align:center; padding:10px;">
+    <a href="#" style="text-decoration:none; color:blue;">Student Registration Form Using Table in HTML</a>
+  </h2>
 
-<script>
-function validateForm() {
-  let valid = true;
-  document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
+  <form onsubmit="return validateForm()" style="width:60%; margin:auto;">
+    <table cellpadding="10" cellspacing="0">
+      
+      <tr>
+        <td style="font-weight:bold; width:30%;">First Name</td>
+        <td>
+          <input type="text" id="fname" maxlength="50" style="width:90%;"> (Max 50 Characters Allowed)
+          <div id="fnameError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  let fname = document.getElementById("FirstName").value.trim();
-  if(fname.length < 3 || !/^[A-Za-z ]+$/.test(fname)){
-    document.getElementById("fnameError").innerHTML = "First name must be at least 3 letters, only letters & spaces allowed.";
-    valid = false;
-  }
-  let lname = document.getElementById("LastName").value.trim();
-  if(lname.length < 3 || !/^[A-Za-z ]+$/.test(lname)){
-    document.getElementById("lnameError").innerHTML = "Last name must be at least 3 letters, only letters & spaces allowed.";
-    valid = false;
-  }
+      
+      <tr>
+        <td style="font-weight:bold;">Last Name</td>
+        <td>
+          <input type="text" id="lname" maxlength="50" style="width:90%;"> (Max 50 Characters Allowed)
+          <div id="lnameError" class="error"></div>
+        </td>
+      </tr>
 
-  let email = document.getElementById("EmailID").value.trim();
-  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if(!emailPattern.test(email)){
-    document.getElementById("emailError").innerHTML = "Enter a valid email.";
-    valid = false;
-  }
+      <tr>
+        <td style="font-weight:bold;">Email ID</td>
+        <td>
+          <input type="text" id="email" style="width:90%;">
+          <div id="emailError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  let mobile = document.getElementById("MobileNumber").value.trim();
-  if(!/^[0-9]{10}$/.test(mobile)){
-    document.getElementById("mobileError").innerHTML = "Mobile number must be exactly 10 digits.";
-    valid = false;
-  }
+     
+      <tr>
+        <td style="font-weight:bold;">Mobile Number</td>
+        <td>
+          <input type="text" id="mobile" maxlength="10" style="width:90%;"> (10 Digits Allowed)
+          <div id="mobileError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  if(!document.querySelector('input[name="Gender"]:checked')){
-    document.getElementById("genderError").innerHTML = "Please select gender.";
-    valid = false;
-  }
+     
+      <tr>
+        <td style="font-weight:bold;">Gender</td>
+        <td>
+          <input type="radio" name="gender" id="male"> Male
+          <input type="radio" name="gender" id="female"> Female
+          <div id="genderError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  let d = document.getElementById("Birthday_Day").value;
-  let m = document.getElementById("Birthday_Month").value;
-  let y = document.getElementById("Birthday_Year").value;
-  if(d == "-1" || m == "-1" || y == "-1"){
-    document.getElementById("dobError").innerHTML = "Please select full DOB.";
-    valid = false;
-  } else {
-    let birthDate = new Date(y, m-1, d);
-    let age = new Date().getFullYear() - birthDate.getFullYear();
-    if(age < 18 || age > 40){
-      document.getElementById("dobError").innerHTML = "Age must be between 18 and 40.";
-      valid = false;
-    }
-  }
+     
+      <tr>
+        <td style="font-weight:bold;">Date of Birth(DOB)</td>
+        <td>
+          <select id="day"><option value="">Day</option></select>
+          <select id="month"><option value="">Month</option></select>
+          <select id="year"><option value="">Year</option></select>
+          <div id="dobError" class="error"></div>
+        </td>
+      </tr>
 
+      
+      <tr>
+        <td style="font-weight:bold;">Address</td>
+        <td>
+          <textarea id="address" rows="4" cols="40"></textarea>
+          <div id="addressError" class="error"></div>
+        </td>
+      </tr>
 
-  let address = document.getElementById("Address").value.trim();
-  if(address === ""){
-    document.getElementById("addressError").innerHTML = "Address is required.";
-    valid = false;
-  }
+      
+      <tr>
+        <td style="font-weight:bold;">City</td>
+        <td>
+          <input type="text" id="city" maxlength="50" style="width:90%;"> (Max 50 Characters Allowed)
+          <div id="cityError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  let city = document.getElementById("City").value.trim();
-  if(city === "" || !/^[A-Za-z ]+$/.test(city)){
-    document.getElementById("cityError").innerHTML = "City must contain only letters.";
-    valid = false;
-  }
+      <!-- Pin -->
+      <tr>
+        <td style="font-weight:bold;">Pin Code</td>
+        <td>
+          <input type="text" id="pin" maxlength="6" style="width:90%;"> (Max 6 Numbers Allowed)
+          <div id="pinError" class="error"></div>
+        </td>
+      </tr>
 
+      <!-- State -->
+      <tr>
+        <td style="font-weight:bold;">State</td>
+        <td>
+          <input type="text" id="state" maxlength="50" style="width:90%;"> (Max 50 Characters Allowed)
+          <div id="stateError" class="error"></div>
+        </td>
+      </tr>
 
-  let pin = document.getElementById("PinCode").value.trim();
-  if(!/^[0-9]{6}$/.test(pin)){
-    document.getElementById("pinError").innerHTML = "Pin code must be 6 digits.";
-    valid = false;
-  }
+      <!-- Country -->
+      <tr>
+        <td style="font-weight:bold;">Country</td>
+        <td>
+          <input type="text" id="country" style="width:90%;">
+          <div id="countryError" class="error"></div>
+        </td>
+      </tr>
 
+      <!-- Hobbies -->
+      <tr>
+        <td style="font-weight:bold;">Hobbies</td>
+        <td>
+          <input type="checkbox" name="hobby" value="Drawing"> Drawing
+          <input type="checkbox" name="hobby" value="Singing"> Singing
+          <input type="checkbox" name="hobby" value="Dancing"> Dancing
+          <input type="checkbox" name="hobby" value="Sketching"> Sketching
+          <input type="checkbox" name="hobby" value="Others"> Others <input type="text" maxlength="50">
+          (Max 50 Characters Allowed)
+          <div id="hobbyError" class="error"></div>
+        </td>
+      </tr>
 
-  let country = document.getElementById("Country").value;
-  if(country === ""){
-    document.getElementById("countryError").innerHTML = "Please select a country.";
-    valid = false;
-  }
+      <!-- Qualification -->
+      <tr>
+        <td style="font-weight:bold;">Qualification</td>
+        <td>
+          <input type="checkbox" name="qual" value="10th"> High School(10th)<br>
+          <input type="checkbox" name="qual" value="12th"> Higher School(12th)<br>
+          <input type="checkbox" name="qual" value="Bachelors"> Graduation(Bachelors)<br>
+          <input type="checkbox" name="qual" value="Masters"> Post Graduation(Masters)<br>
+          <input type="checkbox" name="qual" value="Phd"> Phd
+          <div id="qualError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  if(!document.querySelector('input[name="Hobby"]:checked')){
-    document.getElementById("hobbyError").innerHTML = "Please select at least one hobby.";
-    valid = false;
-  }
+    
+      <tr>
+        <td style="font-weight:bold;">Courses Applied For</td>
+        <td>
+          <input type="radio" name="course" value="BCA"> BCA<br>
+          <input type="radio" name="course" value="BCom"> B.Com<br>
+          <input type="radio" name="course" value="BSc"> B.Sc<br>
+          <input type="radio" name="course" value="BA"> BA<br>
+          <input type="radio" name="course" value="MCA"> MCA<br>
+          <input type="radio" name="course" value="MCom"> M.Com<br>
+          <input type="radio" name="course" value="MSc"> M.Sc<br>
+          <input type="radio" name="course" value="MA"> MA
+          <div id="courseError" class="error"></div>
+        </td>
+      </tr>
 
-  
-  if(!document.querySelector('input[name="Qualification"]:checked')){
-    document.getElementById("qualError").innerHTML = "Please select a qualification.";
-    valid = false;
-  }
-
-
-  if(!document.querySelector('input[name="Course"]:checked')){
-    document.getElementById("courseError").innerHTML = "Please select a course.";
-    valid = false;
-  }
-
-  if(valid){
-    alert("Form submitted successfully!");
-  }
-  return valid;
-}
-</script>
+      
+      <tr>
+        <td colspan="2" style="text-align:center;">
+          <input type="submit" value="Submit" style="padding:5px 15px; margin-right:10px;">
+          <input type="reset" value="Reset" style="padding:5px 15px;">
+        </td>
+      </tr>
+    </table>
+  </form>
 </body>
 </html>

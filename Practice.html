@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form with Validation</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      text-align: left;
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1565c0;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0d47a1;
+    }
+
+    #result {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>Survey Form</h2>
+
+    <form id="surveyForm">
+      <p>
+        <label for="name">What’s your name?</label><br>
+        <input type="text" id="name" name="name">
+        <span id="nameError" style="color:red"></span>
+      </p>
+
+      <p>
+        <label for="email">Your Email:</label><br>
+        <input type="text" id="email" name="email">
+        <span id="emailError" style="color:red"></span>
+      </p>
+
+      <p>
+        <label>Which device do you use most?</label><br>
+        <input type="radio" id="phone" name="device" value="Phone">
+        <label for="phone">Phone</label><br>
+
+        <input type="radio" id="laptop" name="device" value="Laptop">
+        <label for="laptop">Laptop</label><br>
+
+        <input type="radio" id="tablet" name="device" value="Tablet">
+        <label for="tablet">Tablet</label><br>
+        <span id="deviceError" style="color:red"></span>
+      </p>
+
+      <p>
+        <label for="satisfaction">How satisfied are you?</label><br>
+        <select id="satisfaction" name="satisfaction">
+          <option value="">--Choose--</option>
+          <option value="Very Satisfied">Very Satisfied</option>
+          <option value="Satisfied">Satisfied</option>
+          <option value="Neutral">Neutral</option>
+          <option value="Dissatisfied">Dissatisfied</option>
+        </select>
+        <span id="satisfactionError" style="color:red"></span>
+      </p>
+
+      <p>
+        <button type="submit">Submit</button>
+      </p>
+    </form>
+
+    <div id="result" style="font-weight:bold"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('surveyForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); 
+      let isValid = true;
+
+      document.getElementById('nameError').textContent = "";
+      document.getElementById('emailError').textContent = "";
+      document.getElementById('deviceError').textContent = "";
+      document.getElementById('satisfactionError').textContent = "";
+      result.textContent = "";
+
+      const name = document.getElementById('name').value.trim();
+      if (!/^[A-Za-z\s]+$/.test(name)) {
+        document.getElementById('nameError').textContent = "Name must contain only letters and spaces.";
+        isValid = false;
+      }
+
+      const email = document.getElementById('email').value.trim();
+      if (email === "") {
+        document.getElementById('emailError').textContent = "Email is required.";
+        isValid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      const device = document.querySelector('input[name="device"]:checked');
+      if (!device) {
+        document.getElementById('deviceError').textContent = "Please select a device.";
+        isValid = false;
+      }
+
+      const satisfaction = document.getElementById('satisfaction').value;
+      if (satisfaction === "") {
+        document.getElementById('satisfactionError').textContent = "Please select an option.";
+        isValid = false;
+      }
+
+      if (isValid) {
+        result.style.color = "green";
+        result.textContent = "Form submitted successfully!";
+        form.reset(); 
+      }
+    });
+  </script>
+</body>
+</html>
