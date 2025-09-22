@@ -115,8 +115,8 @@
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
           age--;
         }
-        if (age < 18 || age > 60) {
-          document.getElementById("dobError").textContent = "Age must be between 18 and 60 years.";
+        if (age < 18 || age > 40) {
+          document.getElementById("dobError").textContent = "Age must be between 18 and 40 years.";
           valid = false;
         }
       } else {
